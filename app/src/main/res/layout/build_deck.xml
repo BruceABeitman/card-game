@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Build Deck"
+        android:gravity="center"
+        android:textColor="#CCCC"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/element_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick Element"
+        android:textColor="#CCCC"
+        android:layout_below="@id/fullscreen_content"
+        android:textSize="18sp"
+        android:paddingLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px"
+        android:layout_below="@id/element_title">
+
+        <Button
+            android:id="@+id/element_button"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+             />
+
+        <TextView
+            android:id="@+id/element_result"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
+            android:layout_toRightOf="@+id/element_button"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+</LinearLayout>
