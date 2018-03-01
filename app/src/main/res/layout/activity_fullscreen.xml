@@ -20,29 +20,29 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/center"
-        style="?metaButtonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@color/black_overlay"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent">
+        android:layout_below="@id/fullscreen_content"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/build_deck"
+            android:id="@+id/deck_button"
+            android:layout_height="200px"
             android:layout_width="match_parent"
-            android:text="Build Deck"
-            android:layout_height="125px">
-
-        </Button>
+            android:text="Deck"
+            android:textSize="12pt"
+            android:layout_margin="40dp" />
 
         <Button
+            android:id="@+id/game_button"
             android:layout_width="match_parent"
-            android:text="Build Deck"
-            android:layout_height="125px">
-        </Button>
-
+            android:layout_height="200px"
+            android:text="Game"
+            android:textSize="12pt"
+            android:gravity="center"
+            android:layout_below="@+id/element_button"
+            android:layout_margin="40dp" />
     </LinearLayout>
 
     <!-- This FrameLayout insets its children based on system windows using

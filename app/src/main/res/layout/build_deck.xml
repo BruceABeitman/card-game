@@ -21,14 +21,12 @@
         android:layout_height="wrap_content"
         android:text="Pick Element"
         android:textColor="#CCCC"
-        android:layout_below="@id/fullscreen_content"
         android:textSize="18sp"
         android:paddingLeft="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="125px"
-        android:layout_below="@id/element_title">
+        android:layout_height="125px">
 
         <Button
             android:id="@+id/element_button"
@@ -47,7 +45,147 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="RES"
-            android:layout_toRightOf="@+id/element_button"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/class_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick Class"
+        android:textColor="#CCCC"
+        android:textSize="18sp"
+        android:paddingLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px">
+
+        <Button
+            android:id="@+id/class_button"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/class_result"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/class_positions_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick power and positions"
+        android:textColor="#CCCC"
+        android:textSize="18sp"
+        android:paddingLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px">
+
+        <Button
+            android:id="@+id/class_power_button_1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/class_power_result_1"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px">
+
+        <Button
+            android:id="@+id/class_power_button_2"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/class_power_result_2"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px">
+
+        <Button
+            android:id="@+id/class_power_button_3"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/class_power_result_3"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
+            android:textColor="#CCCC"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px">
+
+        <Button
+            android:id="@+id/class_power_button_4"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="roll"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
+        <TextView
+            android:id="@+id/class_power_result_4"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="RES"
             android:textColor="#CCCC"
             android:textSize="18sp" />
     </LinearLayout>

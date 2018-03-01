@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     Button button;
+    Button gameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Listener for deck button on startup
         addListenerOnButton();
+
+        // Disable game button on startup
+        gameButton = (Button) findViewById(R.id.game_button);
+        gameButton.setEnabled(false);
+
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
@@ -116,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     // Button listener for building a new deck
     public void addListenerOnButton() {
 
-        button = (Button) findViewById(R.id.build_deck);
+        button = (Button) findViewById(R.id.deck_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
