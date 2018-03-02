@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+    <!--Title-->
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -15,75 +16,94 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/element_title"
+    <!--Element Section-->
+    <RelativeLayout
+        android:id="@+id/element_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick Element"
-        android:textColor="#CCCC"
-        android:textSize="18sp"
-        android:paddingLeft="20dp"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/element_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick Element"
+            android:textColor="#CCCC"
+            android:textSize="18sp"
+            android:paddingLeft="20dp"/>
 
-    <LinearLayout
+        <LinearLayout
+            android:layout_below="@+id/element_title"
+            android:layout_width="match_parent"
+            android:layout_height="125px">
+
+            <Button
+                android:id="@+id/element_button"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight=".50"
+                android:text="roll"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                 />
+
+            <TextView
+                android:id="@+id/element_result"
+                android:layout_width="0dp"
+                android:layout_weight=".50"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="RES"
+                android:textColor="#CCCC"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--Class Section-->
+    <RelativeLayout
+        android:id="@+id/class_section"
         android:layout_width="match_parent"
-        android:layout_height="125px">
-
-        <Button
-            android:id="@+id/element_button"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight=".50"
-            android:text="roll"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-             />
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/element_result"
-            android:layout_width="0dp"
-            android:layout_weight=".50"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="RES"
+            android:id="@+id/class_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick Class"
             android:textColor="#CCCC"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textSize="18sp"
+            android:paddingLeft="20dp"/>
 
-    <TextView
-        android:id="@+id/class_title"
+        <LinearLayout
+            android:layout_below="@+id/class_title"
+            android:layout_width="match_parent"
+            android:layout_height="125px">
+
+            <Button
+                android:id="@+id/class_button"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight=".50"
+                android:text="roll"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                />
+
+            <TextView
+                android:id="@+id/class_result"
+                android:layout_width="0dp"
+                android:layout_weight=".50"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="RES"
+                android:textColor="#CCCC"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--Class Power Section-->
+    <RelativeLayout
+        android:id="@+id/class_powers_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick Class"
-        android:textColor="#CCCC"
-        android:textSize="18sp"
-        android:paddingLeft="20dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="125px">
-
-        <Button
-            android:id="@+id/class_button"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight=".50"
-            android:text="roll"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            />
-
-        <TextView
-            android:id="@+id/class_result"
-            android:layout_width="0dp"
-            android:layout_weight=".50"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="RES"
-            android:textColor="#CCCC"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/class_positions_title"
         android:layout_width="match_parent"
@@ -94,6 +114,8 @@
         android:paddingLeft="20dp"/>
 
     <LinearLayout
+        android:id="@+id/class_power_1_section"
+        android:layout_below="@+id/class_positions_title"
         android:layout_width="match_parent"
         android:layout_height="125px">
 
@@ -118,6 +140,8 @@
             android:textSize="18sp" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/class_power_2_section"
+        android:layout_below="@+id/class_power_1_section"
         android:layout_width="match_parent"
         android:layout_height="125px">
 
@@ -142,6 +166,8 @@
             android:textSize="18sp" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/class_power_3_section"
+        android:layout_below="@+id/class_power_2_section"
         android:layout_width="match_parent"
         android:layout_height="125px">
 
@@ -166,6 +192,8 @@
             android:textSize="18sp" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/class_power_4_section"
+        android:layout_below="@+id/class_power_3_section"
         android:layout_width="match_parent"
         android:layout_height="125px">
 
@@ -188,6 +216,26 @@
             android:text="RES"
             android:textColor="#CCCC"
             android:textSize="18sp" />
+    </LinearLayout>
+    </RelativeLayout>
+
+    <!--Place Base Number Button-->
+    <LinearLayout
+        android:id="@+id/card_section"
+        android:layout_width="match_parent"
+        android:layout_height="125px"
+        android:layout_marginTop="40dp">
+
+        <Button
+            android:id="@+id/card_button"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:text="Place Base Numbers"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            />
+
     </LinearLayout>
 
 
