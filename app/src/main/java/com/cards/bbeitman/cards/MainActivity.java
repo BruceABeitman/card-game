@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent myIntent = new Intent(MainActivity.this, BuildDeck.class);
+                Intent myIntent = new Intent(MainActivity.this, BuildCard.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(myIntent);
 //                Intent browserIntent =

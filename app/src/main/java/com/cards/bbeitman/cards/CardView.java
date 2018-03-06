@@ -2,19 +2,21 @@ package com.cards.bbeitman.cards;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class CardView extends Activity implements AdapterView.OnItemSelectedListener {
 
@@ -27,8 +29,22 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
     Spinner spinner7;
     Spinner spinner8;
 
-    HashMap<Integer, Set<Integer>> cardMap = new HashMap<>();
+    TextView text1;
+    TextView text2;
+    TextView text3;
+    TextView text4;
+    TextView text5;
+    TextView text6;
+    TextView text7;
+    TextView text8;
+
+    // <Position, Available Powers>
+//    HashMap<Integer, Set<Integer>> cardMap = new HashMap<>();
+    Card card;
+    // <Position, Power>
+    HashMap<Integer, Integer> currentMap = new HashMap<>();
     List<Spinner> spinnerList = new ArrayList<>();
+    List<TextView> textList = new ArrayList<>();
     List<Integer> activePositions = new ArrayList<>();
     Button confirmButton;
 
@@ -37,36 +53,116 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_view);
 
-        cardMap = (HashMap<Integer, Set<Integer>>) getIntent().getSerializableExtra("cardMap");
+        card = (Card) getIntent().getSerializableExtra("card");
 
         confirmButton = (Button) findViewById(R.id.confirmButton);
         confirmButtonListener();
 
         // Get all spinners
         spinnerSetup();
+        textSetup();
 
         // Populate spinners with options
-        Iterator it = cardMap.entrySet().iterator();
-        int index = 0;
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Integer position = (Integer) pair.getKey();
-            ArrayList<Integer> availablePowers = (ArrayList) pair.getValue();
-            activePositions.add(position);
-            ArrayAdapter<Integer> itemsAdapter =
-                    new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, availablePowers);
-            itemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerList.get(position-1).setAdapter(itemsAdapter);
-            index++;
-        }
-
-        // Deactivate all invalid spinners
-        int pos = 1;
-        for (Spinner spinner : spinnerList) {
-            if (!activePositions.contains(pos)) {
-                spinner.setEnabled(false);
+        // Determine if we're viewing unchosen race or class card
+        if (card.getClassId() == null) {
+            // Undetermined class, build for determining race parameters
+            Iterator it = card.getRaceCardMap().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                Integer position = (Integer) pair.getKey();
+                ArrayList<Integer> availablePowers = (ArrayList) pair.getValue();
+                activePositions.add(position);
+                ArrayAdapter<Integer> itemsAdapter =
+                        new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, availablePowers);
+                itemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                card.getPowMap().put(position, itemsAdapter.getItem(0));
+                spinnerList.get(position-1).setAdapter(itemsAdapter);
             }
-            pos++;
+            // Deactivate all invalid spinners
+            int pos = 1;
+            for (Spinner spinner : spinnerList) {
+                if (!activePositions.contains(pos)) {
+                    spinner.setEnabled(false);
+                }
+                pos++;
+            }
+        } else {
+            // Build for determining final class & race parameters
+            // Place all powMap values, without activating the spinners
+            Iterator it = card.getPowMap().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                Integer position = (Integer) pair.getKey();
+                Integer power = (Integer) pair.getValue();
+                spinnerList.get(position-1).setVisibility(View.GONE);
+                textList.get(position-1).setVisibility(View.VISIBLE);
+                textList.get(position-1).setText(power.toString());
+            }
+            // If we only have 1 class position, then place it along with other powMap
+            if (card.getClassPowers().size() == 1) {
+                Iterator mit = card.getClassCardMap().entrySet().iterator();
+                while (mit.hasNext()) {
+                    Map.Entry pair = (Map.Entry)mit.next();
+                    Integer position = (Integer) pair.getKey();
+                    Integer power = (Integer) ((ArrayList)pair.getValue()).get(0);
+                    spinnerList.get(position-1).setVisibility(View.GONE);
+                    textList.get(position-1).setVisibility(View.VISIBLE);
+                    textList.get(position-1).setText(power.toString());
+                }
+            // If we have more than 1 class position, then build spinners for class positions, along with other powMap
+            } else {
+                Iterator mit = card.getClassCardMap().entrySet().iterator();
+                while (mit.hasNext()) {
+                    Map.Entry pair = (Map.Entry)mit.next();
+                    Integer position = (Integer) pair.getKey();
+                    ArrayList<Integer> availablePowers = (ArrayList) pair.getValue();
+                    activePositions.add(position);
+                    ArrayAdapter<Integer> itemsAdapter =
+                            new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, availablePowers);
+                    itemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    card.getPowMap().put(position, itemsAdapter.getItem(0));
+                    spinnerList.get(position-1).setAdapter(itemsAdapter);
+                }
+            }
+            // Remove all invalid spinners
+            int pos = 1;
+            for (Spinner spinner : spinnerList) {
+                if (!card.getPowMap().containsKey(pos) && !card.getClassPositions().contains(pos)) {
+                    spinner.setVisibility(View.GONE);
+                    textList.get(pos-1).setVisibility(View.VISIBLE);
+                }
+                pos++;
+            }
+        }
+    }
+
+    // TODO This should prioritize spinners NOT recently changed...
+    private void swapSpinnerValue(Integer thisPos, Integer oldPow, Integer newPow) {
+        Iterator it = card.getPowMap().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            Integer currPos = (Integer) entry.getKey();
+            Integer currPower = (Integer) entry.getValue();
+            // If this spinner is not the current spinner
+            if (currPos != thisPos) {
+                // and this spinner's current power equals the current spinner's new power
+                if (currPower == newPow) {
+                    // get all the current spinner's available allPowers
+                    Adapter adapter = spinnerList.get(currPos-1).getAdapter();
+                    int count = adapter.getCount();
+                    // find the index of the current spinner's old power
+                    for (int i=0; i<count; i++) {
+                        if ((Integer) adapter.getItem(i) == oldPow) {
+                            // Set this spinner's selection to the current spinner's old power's index
+                            spinnerList.get(currPos-1).setSelection(i);
+                            // Update the powMap
+                            card.getPowMap().put(currPos, oldPow);
+                            card.getPowMap().put(thisPos, newPow);
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -74,32 +170,52 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
         Spinner spinner = (Spinner) parent;
         switch (spinner.getId()) {
             case R.id.spinner1:
-                Integer currentPow1 = (Integer) spinner1.getSelectedItem();
-                System.out.println("1: " + currentPow1);
+                Integer newPow1 = (Integer) spinner1.getSelectedItem();
+                Integer oldPow1 = card.getPowMap().get(1);
+                swapSpinnerValue(1, oldPow1, newPow1);
+                System.out.println("1: was " + oldPow1 + " now is " + newPow1);
                 break;
             case R.id.spinner2:
-                Integer currentPow2 = (Integer) spinner2.getSelectedItem();
-                System.out.println("2: " + currentPow2);
+                Integer newPow2 = (Integer) spinner2.getSelectedItem();
+                Integer oldPow2 = card.getPowMap().get(2);
+                swapSpinnerValue(2, oldPow2, newPow2);
+                System.out.println("2: was " + oldPow2 + " now is " + newPow2);
                 break;
             case R.id.spinner3:
-                Integer currentPow3 = (Integer) spinner3.getSelectedItem();
-                System.out.println("3: " + currentPow3);
+                Integer newPow3 = (Integer) spinner3.getSelectedItem();
+                Integer oldPow3 = card.getPowMap().get(3);
+                swapSpinnerValue(3, oldPow3, newPow3);
+                System.out.println("3: was " + oldPow3 + " now is " + newPow3);
                 break;
             case R.id.spinner4:
-                Integer currentPow4 = (Integer) spinner4.getSelectedItem();
-                System.out.println("4: " + currentPow4);
+                Integer newPow4 = (Integer) spinner4.getSelectedItem();
+                Integer oldPow4 = card.getPowMap().get(4);
+                swapSpinnerValue(4, oldPow4, newPow4);
+                System.out.println("4: was " + oldPow4 + " now is " + newPow4);
                 break;
             case R.id.spinner5:
-                System.out.println("5");
+                Integer newPow5 = (Integer) spinner5.getSelectedItem();
+                Integer oldPow5 = card.getPowMap().get(5);
+                swapSpinnerValue(5, oldPow5, newPow5);
+                System.out.println("5: was " + oldPow5 + " now is " + newPow5);
                 break;
             case R.id.spinner6:
-                System.out.println("6");
+                Integer newPow6 = (Integer) spinner6.getSelectedItem();
+                Integer oldPow6 = card.getPowMap().get(6);
+                swapSpinnerValue(6, oldPow6, newPow6);
+                System.out.println("6: was " + oldPow6 + " now is " + newPow6);
                 break;
             case R.id.spinner7:
-                System.out.println("7");
+                Integer newPow7 = (Integer) spinner7.getSelectedItem();
+                Integer oldPow7 = card.getPowMap().get(7);
+                swapSpinnerValue(7, oldPow7, newPow7);
+                System.out.println("7: was " + oldPow7 + " now is " + newPow7);
                 break;
             case R.id.spinner8:
-                System.out.println("8");
+                Integer newPow8 = (Integer) spinner8.getSelectedItem();
+                Integer oldPow8 = card.getPowMap().get(8);
+                swapSpinnerValue(8, oldPow8, newPow8);
+                System.out.println("8: was " + oldPow8 + " now is " + newPow8);
                 break;
         }
     }
@@ -111,11 +227,20 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
     // Button listener for confirming card layout
     public void confirmButtonListener() {
         confirmButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View arg0) {
-//                final int element = new Random().nextInt(4) + 1;
-//                TextView tv = (TextView)findViewById(R.id.element_result);
-//                tv.setText(Integer.toString(element));
+                // If the card has a class, kick back to deck overview
+                if (card.getClassId() != null) {
+                    Intent myIntent = new Intent(CardView.this, BuildCard.class);
+                    myIntent.putExtra("card", card); //Optional parameters
+                    CardView.this.startActivity(myIntent);
+                // Otherwise, kick back to build card for class details
+                } else {
+                    Intent myIntent = new Intent(CardView.this, BuildCard.class);
+                    myIntent.putExtra("card", card); //Optional parameters
+                    CardView.this.startActivity(myIntent);
+                }
             }
         });
     }
@@ -148,5 +273,26 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
         spinnerList.add(spinner6);
         spinnerList.add(spinner7);
         spinnerList.add(spinner8);
+    }
+
+    private void textSetup() {
+
+        text1 = (TextView) findViewById(R.id.text1);
+        text2 = (TextView) findViewById(R.id.text2);
+        text3 = (TextView) findViewById(R.id.text3);
+        text4 = (TextView) findViewById(R.id.text4);
+        text5 = (TextView) findViewById(R.id.text5);
+        text6 = (TextView) findViewById(R.id.text6);
+        text7 = (TextView) findViewById(R.id.text7);
+        text8 = (TextView) findViewById(R.id.text8);
+
+        textList.add(text1);
+        textList.add(text2);
+        textList.add(text3);
+        textList.add(text4);
+        textList.add(text5);
+        textList.add(text6);
+        textList.add(text7);
+        textList.add(text8);
     }
 }

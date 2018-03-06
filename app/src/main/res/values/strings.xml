@@ -4,4 +4,88 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title">Work/Class Card Game</string>
+
+    <!--Elements-->
+    <string name="earth">Earth</string>
+    <string name="water">Water</string>
+    <string name="fire">Fire</string>
+    <string name="wind">Wind</string>
+    <string-array name="elements">
+        <item>@string/earth</item>
+        <item>@string/water</item>
+        <item>@string/fire</item>
+        <item>@string/wind</item>
+    </string-array>
+
+    <!--Races-->
+    <string name="dragonborn">Dragonborn</string>
+    <string name="goblin">Goblin</string>
+    <string name="dwarf">Dwarf</string>
+    <string name="human">Human</string>
+    <string name="elf">Elf</string>
+    <string name="giant">Giant</string>
+    <string name="halfling">Halfling</string>
+    <string name="gnome">Gnome</string>
+    <string name="skeleton">Skeleton</string>
+    <string name="imp">Imp</string>
+    <string name="orc">Orc</string>
+    <string name="centaur">Centaur</string>
+    <string name="minotaur">Minotaur</string>
+    <string name="demon">Demon</string>
+    <string name="dark_elf">Dark Elf</string>
+    <string name="beholder">Beholder</string>
+    <string name="celestial">Celestial</string>
+    <string name="golem">Golem</string>
+    <string name="lizardfolk">Lizardfolk</string>
+    <string name="troll">Troll</string>
+    <string-array name="races">
+        <item>@string/dragonborn</item>
+        <item>@string/goblin</item>
+        <item>@string/dwarf</item>
+        <item>@string/human</item>
+        <item>@string/elf</item>
+        <item>@string/giant</item>
+        <item>@string/halfling</item>
+        <item>@string/gnome</item>
+        <item>@string/skeleton</item>
+        <item>@string/imp</item>
+        <item>@string/orc</item>
+        <item>@string/centaur</item>
+        <item>@string/minotaur</item>
+        <item>@string/demon</item>
+        <item>@string/dark_elf</item>
+        <item>@string/beholder</item>
+        <item>@string/celestial</item>
+        <item>@string/golem</item>
+        <item>@string/lizardfolk</item>
+        <item>@string/troll</item>
+    </string-array>
+
+    <!--Classes-->
+    <string name="bard">Bard</string>
+    <string name="cleric">Cleric</string>
+    <string name="warrior">Warrior</string>
+    <string name="rogue">Rogue</string>
+    <string name="wizard">Wizard</string>
+    <string name="shaman">Shaman</string>
+    <string name="berzerker">Berzerker</string>
+    <string name="monk">Monk</string>
+    <string name="summoner">Summoner</string>
+    <string name="ranger">Ranger</string>
+    <string name="druid">Druid</string>
+    <string name="priest">Priest</string>
+    <string-array name="classes">
+        <item>@string/bard</item>
+        <item>@string/cleric</item>
+        <item>@string/warrior</item>
+        <item>@string/rogue</item>
+        <item>@string/wizard</item>
+        <item>@string/shaman</item>
+        <item>@string/berzerker</item>
+        <item>@string/monk</item>
+        <item>@string/summoner</item>
+        <item>@string/ranger</item>
+        <item>@string/druid</item>
+        <item>@string/priest</item>
+    </string-array>
 </resources>
