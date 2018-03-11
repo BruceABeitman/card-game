@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/deck_grid"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:verticalScrollbarPosition="right"
+        android:scrollbars="vertical"
+        android:orientation="horizontal"
+        android:layout_weight=".2"
+        tools:context=".GridXMLActivity" >
+    </GridView>
+
+    <LinearLayout
+        android:layout_below="@+id/class_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/deck_size_title"
+            android:textColor="#BBBB"
+            android:paddingLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deck size: "/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".2"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/deck_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:gravity="center_vertical|left"
+            android:text="0"
+            android:textColor="#DDDD"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/deck_limit_delimiter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="0dp"
+            android:gravity="center_vertical|left"
+            android:text="/"
+            android:textColor="#DDDD"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/deck_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:text="30"
+            android:textColor="#DDDD"
+            android:textSize="25sp" />
+        </LinearLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/build_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:backgroundTint="#CCCC"
+            android:src="@drawable/ic_add_black_24dp"
+            app:elevation="4dp" />
+    </LinearLayout>
 
 </LinearLayout>

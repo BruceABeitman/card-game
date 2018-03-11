@@ -2,7 +2,9 @@ package com.cards.bbeitman.cards;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
@@ -47,14 +49,29 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
     List<TextView> textList = new ArrayList<>();
     List<Integer> activePositions = new ArrayList<>();
     Button confirmButton;
+    Context mContext;
+    Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_view);
+        res = getResources();
 
         card = (Card) getIntent().getSerializableExtra("card");
 
+        // populate race, class, element
+        TextView elementView = findViewById(R.id.element_title);
+        elementView.setText(res.getStringArray(R.array.elements)[card.getElementId()-1]);
+        TextView raceView = findViewById(R.id.race_title);
+        raceView.setText(res.getStringArray(R.array.races)[card.getRaceId()-1]);
+        if (card.getClassId() != null) {
+            TextView classView = findViewById(R.id.class_title);
+            classView.setText(res.getStringArray(R.array.classes)[card.getClassId() - 1]);
+        }
+
+
+        mContext = this;
         confirmButton = (Button) findViewById(R.id.confirmButton);
         confirmButtonListener();
 
@@ -232,8 +249,8 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
             public void onClick(View arg0) {
                 // If the card has a class, kick back to deck overview
                 if (card.getClassId() != null) {
-                    Intent myIntent = new Intent(CardView.this, BuildCard.class);
-                    myIntent.putExtra("card", card); //Optional parameters
+                    card.addCardToDeck(mContext);
+                    Intent myIntent = new Intent(CardView.this, OverviewDeck.class);
                     CardView.this.startActivity(myIntent);
                 // Otherwise, kick back to build card for class details
                 } else {

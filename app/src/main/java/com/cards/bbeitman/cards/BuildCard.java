@@ -62,13 +62,7 @@ public class BuildCard extends Activity {
         setContentView(R.layout.card_build);
 
         Intent intent = getIntent();
-//        String value = intent.getStringExtra("key");
-//        currentMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("currentMap");
         card = (Card) getIntent().getSerializableExtra("card");
-
-        // Build map of race positions
-//        buildRacePosMap();
-//        buildClassPosMap();
         res = getResources();
 
         // Find buttons

@@ -1,6 +1,16 @@
 package com.cards.bbeitman.cards;
 
+import android.content.Context;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -131,6 +141,48 @@ public class Card implements Serializable {
             return classPosMap.get(classId);
         }
         return null;
+    }
+
+    public void addCardToDeck(Context context) {
+        String cardFile = "cards.txt";
+        ObjectInputStream input;
+        try {
+            // Check if deck is currently empty
+            File f = new File(context.getFilesDir()+File.separator+cardFile);
+            if (f.length() != 0) {
+                // Get current deck
+                input = new ObjectInputStream(new FileInputStream(f));
+                Deck deck = (Deck) input.readObject();
+                deck.getCards().add(this);
+                input.close();
+                // Write updated deck
+                FileOutputStream fos = context.openFileOutput(cardFile, Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(deck);
+                os.close();
+                fos.close();
+            } else {
+                // Build new deck
+                FileOutputStream fos = context.openFileOutput(cardFile, Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(new Deck(new ArrayList<>(Arrays.asList(this))));
+                os.close();
+                fos.close();
+            }
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            File f = new File(context.getFilesDir(), cardFile);
+            try {
+                f.createNewFile();
+            } catch (IOException ine) {
+                ine.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     static private HashMap<Integer, ArrayList<Integer>> buildRacePosMap() {
