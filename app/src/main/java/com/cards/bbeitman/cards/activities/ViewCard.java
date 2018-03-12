@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.activities;
 
 
 import android.app.Activity;
@@ -6,13 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.cards.bbeitman.cards.R;
+import com.cards.bbeitman.cards.models.Card;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class CardView extends Activity implements AdapterView.OnItemSelectedListener {
+public class ViewCard extends Activity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner1;
     Spinner spinner2;
@@ -58,6 +63,8 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
         setContentView(R.layout.card_view);
         res = getResources();
 
+        LinearLayout topLevel = findViewById(R.id.top_level);
+        topLevel.setBackground(ContextCompat.getDrawable(this, R.drawable.purple_background));
         card = (Card) getIntent().getSerializableExtra("card");
 
         // populate race, class, element
@@ -125,6 +132,7 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
                     spinnerList.get(position-1).setVisibility(View.GONE);
                     textList.get(position-1).setVisibility(View.VISIBLE);
                     textList.get(position-1).setText(power.toString());
+                    card.getPowMap().put(position, power);
                 }
             // If we have more than 1 class position, then build spinners for class positions, along with other powMap
             } else {
@@ -166,16 +174,18 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
                 if (currPower == newPow) {
                     // get all the current spinner's available allPowers
                     Adapter adapter = spinnerList.get(currPos-1).getAdapter();
-                    int count = adapter.getCount();
-                    // find the index of the current spinner's old power
-                    for (int i=0; i<count; i++) {
-                        if ((Integer) adapter.getItem(i) == oldPow) {
-                            // Set this spinner's selection to the current spinner's old power's index
-                            spinnerList.get(currPos-1).setSelection(i);
-                            // Update the powMap
-                            card.getPowMap().put(currPos, oldPow);
-                            card.getPowMap().put(thisPos, newPow);
-                            return;
+                    if (adapter != null) {
+                        int count = adapter.getCount();
+                        // find the index of the current spinner's old power
+                        for (int i = 0; i < count; i++) {
+                            if ((Integer) adapter.getItem(i) == oldPow) {
+                                // Set this spinner's selection to the current spinner's old power's index
+                                spinnerList.get(currPos - 1).setSelection(i);
+                                // Update the powMap
+                                card.getPowMap().put(currPos, oldPow);
+                                card.getPowMap().put(thisPos, newPow);
+                                return;
+                            }
                         }
                     }
                 }
@@ -250,13 +260,13 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
                 // If the card has a class, kick back to deck overview
                 if (card.getClassId() != null) {
                     card.addCardToDeck(mContext);
-                    Intent myIntent = new Intent(CardView.this, OverviewDeck.class);
-                    CardView.this.startActivity(myIntent);
+                    Intent myIntent = new Intent(ViewCard.this, OverviewDeck.class);
+                    ViewCard.this.startActivity(myIntent);
                 // Otherwise, kick back to build card for class details
                 } else {
-                    Intent myIntent = new Intent(CardView.this, BuildCard.class);
+                    Intent myIntent = new Intent(ViewCard.this, BuildCard.class);
                     myIntent.putExtra("card", card); //Optional parameters
-                    CardView.this.startActivity(myIntent);
+                    ViewCard.this.startActivity(myIntent);
                 }
             }
         });
@@ -311,5 +321,14 @@ public class CardView extends Activity implements AdapterView.OnItemSelectedList
         textList.add(text6);
         textList.add(text7);
         textList.add(text8);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // Make back go to deck overview
+        super.onBackPressed();
+        startActivity(new Intent(ViewCard.this, OverviewDeck.class));
+        finish();
     }
 }

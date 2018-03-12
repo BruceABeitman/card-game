@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.models;
 
 import android.content.Context;
 
@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Deck implements Serializable {
 

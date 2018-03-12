@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.cards.bbeitman.cards.R;
+import com.cards.bbeitman.cards.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -355,15 +358,15 @@ public class BuildCard extends Activity {
             @Override
             public void onClick(View arg0) {
                 if (choosingRace) {
-                    Intent myIntent = new Intent(BuildCard.this, CardView.class);
+                    Intent myIntent = new Intent(BuildCard.this, ViewCard.class);
                     card = new Card(elementResult, raceResult, allPowers);
                     myIntent.putExtra("card", card); //Optional parameters
                     BuildCard.this.startActivity(myIntent);
                 }
                 if (choosingClass && checkAllPowersChosen()) {
                     card.setClassPowers(classPowers);
-                    // Build intent for placing any class data in CardView activity
-                    Intent myIntent = new Intent(BuildCard.this, CardView.class);
+                    // Build intent for placing any class data in ViewCard activity
+                    Intent myIntent = new Intent(BuildCard.this, ViewCard.class);
                     myIntent.putExtra("card", card); //Optional parameters
                     BuildCard.this.startActivity(myIntent);
                 }
@@ -383,5 +386,14 @@ public class BuildCard extends Activity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // Make back go to deck overview
+        super.onBackPressed();
+        startActivity(new Intent(BuildCard.this, OverviewDeck.class));
+        finish();
     }
 }

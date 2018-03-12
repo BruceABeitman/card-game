@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,11 +6,13 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import com.cards.bbeitman.cards.R;
+import com.cards.bbeitman.cards.activities.adapters.CardAdapter;
+import com.cards.bbeitman.cards.models.Card;
+import com.cards.bbeitman.cards.models.Deck;
 
 public class OverviewDeck extends Activity {
 
@@ -48,5 +50,14 @@ public class OverviewDeck extends Activity {
     private void buildDeckGrid() {
         GridView gridView = findViewById(R.id.deck_grid);
         gridView.setAdapter(new CardAdapter(this, deck.getCards(), res));
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // Make back go to main menu
+        super.onBackPressed();
+        startActivity(new Intent(OverviewDeck.this, MainMenu.class));
+        finish();
     }
 }

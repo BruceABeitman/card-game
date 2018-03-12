@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,11 +10,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.cards.bbeitman.cards.R;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -112,7 +114,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Disable game button on startup
         gameButton = (Button) findViewById(R.id.game_button);
-        gameButton.setEnabled(false);
+
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent myIntent = new Intent(MainMenu.this, Game.class);
+                MainMenu.this.startActivity(myIntent);
+            }
+
+        });
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
@@ -127,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent myIntent = new Intent(MainActivity.this, OverviewDeck.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(MainMenu.this, OverviewDeck.class);
+                MainMenu.this.startActivity(myIntent);
             }
 
         });
@@ -187,5 +197,12 @@ public class MainActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // Quit app if back on Main Menu
+        finish();
     }
 }

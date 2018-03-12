@@ -1,4 +1,4 @@
-package com.cards.bbeitman.cards;
+package com.cards.bbeitman.cards.activities.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.cards.bbeitman.cards.R;
+import com.cards.bbeitman.cards.models.Card;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +54,7 @@ public class CardAdapter extends BaseAdapter {
         if (convertView == null) {
             // get layout from xml file
             gridView = inflater.inflate(R.layout.card_view, null);
-            gridView.setLayoutParams(new LinearLayout.LayoutParams(400, 600));
+//            gridView.setLayoutParams(new LinearLayout.LayoutParams(400, 600));
 
             // get current card
             Card card = mCards.get(position);
